@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Milk",
+    "description": "white",
+    "price": 12,
+    "creation_date": 1665522000000,
+    "thumbnail_img": null,
+    "img": "https://i5.walmartimages.com/asr/3592de4c-2d2d-4285-afbf-f0508775bd58_2.bb23225176016b4d5ce96c4efed80382.jpeg"
+  },
+  {
+    "id": 2,
+    "name": "Chocolate",
+    "description": "brown",
+    "price": 5,
+    "creation_date": 1665522000000,
+    "thumbnail_img": null,
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvMJLoCROBWDG86L1KZM-qMXfCsNBUL__xyg&usqp=CAU"
+  },
+  {
+    "id": 3,
+    "name": "Bread",
+    "description": "Hot",
+    "price": 4,
+    "creation_date": 1665522000000,
+    "thumbnail_img": null,
+    "img": "https://www.kingarthurbaking.com/sites/default/files/2020-02/the-easiest-loaf-of-bread-youll-ever-bake.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Lemon",
+    "description": "yellow",
+    "price": 4,
+    "creation_date": 1665522000000,
+    "thumbnail_img": null,
+    "img": "https://media.healthyfood.com/wp-content/uploads/2017/03/What-to-do-with-lemons.jpg"
+  }
+]

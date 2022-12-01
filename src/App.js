@@ -24,8 +24,8 @@ function App() {
   const [itemsList, setItemsList] = useState([...itemListServer]);
   const [selectedItem, setSelectedItem] = useState("");
   const [isAddNewItem, setIsAddNewItem] = useState("");
-
-  
+  const [searchValue, setSearchValue] = useState("");
+  const [sortValues, setSortValue] = useState({ category: "", order: "ASC" });
 
   const handleSorting = (value) => {
     if (value === "name") {
@@ -47,6 +47,7 @@ function App() {
       let temp = [...itemsList].sort((a, b) => a.price - b.price);
       setItemsList(temp);
     }
+    setSortValue({ ...sortValues, category: value });
   };
 
   useEffect(() => {
@@ -94,7 +95,10 @@ function App() {
             label="Search"
             variant="outlined"
             onChange={(e) => {
-              dispatch(itemsSlice.filterItemsHandler(e.target.value));
+              dispatch(
+                itemsSlice.filterItemsHandler(e.target.value, sortValues),
+              );
+              setSearchValue(e.target.value);
             }}
           />
         </Grid>
@@ -105,11 +109,16 @@ function App() {
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Sort</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
               label="Sort"
-              onChange={(e) => handleSorting(e.target.value)}
+              onChange={(e) => {
+                dispatch(
+                  itemsSlice.filterItemsHandler(searchValue, {
+                    ...sortValues,
+                    category: e.target.value,
+                  }),
+                );
+                setSortValue({ ...sortValues, category: e.target.value });
+              }}
             >
               <MenuItem value={"name"}>Name</MenuItem>
               <MenuItem value={"price"}>Price</MenuItem>

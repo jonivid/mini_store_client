@@ -41,12 +41,11 @@ export const updateItemHandler = (editedItem) => async (dispatch, getState) => {
 };
 
 export const filterItemsHandler =
-  (searchValue) => async (dispatch, getState) => {
-    console.log(searchValue);
+  (searchValue,sortValues) => async (dispatch, getState) => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/items/search_by_value`,
-        { searchValue },
+        { searchValue, sortValues },
       );
       dispatch(setItemList(res.data));
     } catch (error) {

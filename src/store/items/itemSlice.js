@@ -41,7 +41,7 @@ export const updateItemHandler = (editedItem) => async (dispatch, getState) => {
 };
 
 export const filterItemsHandler =
-  (searchValue,sortValues) => async (dispatch, getState) => {
+  (searchValue, sortValues) => async (dispatch, getState) => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/items/search_by_value`,
@@ -52,6 +52,40 @@ export const filterItemsHandler =
       console.log("filterItemsHandler:", error);
     }
   };
+export const addNewItemHandler = (newItem) => async (dispatch, getState) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/items/add_new_item`,
+      { newItem },
+    );
+    if (res.status === 200) {
+      const itemsList = [...getState().itemsSlice.items];
+      itemsList.push(newItem);
+      dispatch(setItemList(itemsList));
+    }
+  } catch (error) {
+    console.log("addNewItemHandler:", error);
+  }
+};
+export const deleteItemHandler = (item) => async (dispatch, getState) => {
+  console.log(item);
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/items/delete_item`,
+      { item },
+    );
+    if (res.status === 200) {
+      const itemsList = [...getState().itemsSlice.items];
+      const indexToRemove = itemsList.findIndex(
+        (i) => Number(i.id) === Number(item.id),
+      );
+      itemsList.splice(indexToRemove, 1);
+      dispatch(setItemList(itemsList));
+    }
+  } catch (error) {
+    console.log("deleteItemHandler:", error);
+  }
+};
 
 export const { setItemList } = itemSlice.actions;
 

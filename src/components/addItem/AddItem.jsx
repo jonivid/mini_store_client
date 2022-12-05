@@ -1,8 +1,11 @@
 import { Button, Grid, Snackbar, TextField } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as itemsSlice from "../../store/items/itemSlice";
 
 export const AddItem = ({ setItemsList, itemsList, setIsAddNewItem }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [newItem, setNewItem] = useState({
@@ -35,7 +38,7 @@ export const AddItem = ({ setItemsList, itemsList, setIsAddNewItem }) => {
         setOpen(false);
       }, [5000]);
     } else if (arr.length === 0) {
-      setItemsList([...itemsList, newItem]);
+      dispatch(itemsSlice.addNewItemHandler(newItem));
       setIsAddNewItem("");
     }
   };

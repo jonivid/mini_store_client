@@ -1,11 +1,18 @@
 import { Button, Grid } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as itemsSlice from "../../store/items/itemSlice";
 
 export const ItemList = ({ setSelectedItem }) => {
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.itemsSlice.items);
   const handleSelected = (item) => {
     setSelectedItem(item);
+  };
+  const deleteItem = (e, item) => {
+    e.stopPropagation();
+    dispatch(itemsSlice.deleteItemHandler(item));
+    setSelectedItem("");
   };
   return (
     <Grid container flexDirection={"column"} justifyContent={"space-evenly"}>
@@ -49,7 +56,13 @@ export const ItemList = ({ setSelectedItem }) => {
               item
               // style={{ marginTop: "15px" }}
             >
-              <Button variant="contained" style={{ width: "30px" }}>
+              <Button
+                variant="contained"
+                style={{ width: "30px" }}
+                onClick={(e) => {
+                  deleteItem(e, item);
+                }}
+              >
                 Delete
               </Button>
             </Grid>

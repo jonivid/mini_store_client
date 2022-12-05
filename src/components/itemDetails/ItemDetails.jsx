@@ -32,6 +32,7 @@ export const ItemDetails = ({ selectedItem }) => {
   };
 
   useEffect(() => {
+    console.log("useEf")
     setEditedItem(selectedItem);
     setIsSendBtnActive(false);
   }, [selectedItem]);

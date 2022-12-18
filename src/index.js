@@ -5,12 +5,46 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/index";
 import { Provider } from "react-redux";
+// import {
+//   BrowserRouter,
+
+// } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./components/errorPage/ErrorPage";
+import { Home } from "./components/home/Home";
+import HomeLayout from "./components/homeLayout/HomeLayout";
+import { ItemsLayout } from "./components/itemsLayout/ItemsLayout";
+import { ItemCardDetails } from "./components/itemCardDetails/ItemCardDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/items",
+        element: <ItemsLayout />,
+      },
+      {
+        path: "/items/:id",
+        element: <ItemCardDetails />,
+      },
+    ],
+  },
+]);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {/* <BrowserRouter>
+        <App />
+      </BrowserRouter> */}
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
 );

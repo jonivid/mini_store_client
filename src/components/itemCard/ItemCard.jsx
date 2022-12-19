@@ -1,10 +1,15 @@
 import { Button, Grid, IconButton } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
+import { useDispatch } from "react-redux";
+import * as itemsSlice from "../../store/items/itemSlice";
+import "./style.css";
 export const ItemCard = ({ itemObj }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <Grid
       //card grid
@@ -21,6 +26,11 @@ export const ItemCard = ({ itemObj }) => {
           src={itemObj.image}
           alt={"source is broken"}
           style={{ height: "200px", width: "300px" }}
+          onClick={() => {
+            dispatch(itemsSlice.setSelectedItem(itemObj));
+            navigate(`${itemObj.id}`);
+          }}
+          className={"item-image"}
         ></img>
       </Grid>
       <Grid item lg={12} sx={12}>
@@ -36,6 +46,9 @@ export const ItemCard = ({ itemObj }) => {
         item
         lg={12}
         sx={12}
+        onClick={() => {
+          dispatch(itemsSlice.setSelectedItem(itemObj));
+        }}
       >
         <Link
           style={{ textDecoration: "none", color: "#89734b" }}

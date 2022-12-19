@@ -5,10 +5,14 @@ export let itemSlice = createSlice({
   name: "itemSlice",
   initialState: {
     items: [],
+    selectedItem: {},
   },
   reducers: {
     setItemList: (state, action) => {
       state.items = action.payload;
+    },
+    setSelectedItem: (state, action) => {
+      state.selectedItem = action.payload;
     },
   },
 });
@@ -87,6 +91,18 @@ export const deleteItemHandler = (item) => async (dispatch, getState) => {
   }
 };
 
-export const { setItemList } = itemSlice.actions;
+export const getItemById = (params) => async (dispatch, getState) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/items/${params}`,
+    );
+    dispatch(setSelectedItem(res.data[0]));
+  } catch (error) {
+        console.log("getItemById:", error);
+
+  }
+};
+
+export const { setItemList, setSelectedItem } = itemSlice.actions;
 
 export default itemSlice.reducer;

@@ -5,12 +5,15 @@ import { ItemCard } from "../itemCard/ItemCard";
 
 export const ItemsLayout = () => {
   const items = useSelector((state) => state.itemsSlice.items);
-  console.log(items);
   return (
     <Grid
       container
       justifyContent={"center"}
-      style={{ border: "1px solid blue", display: "flex", zIndex: -1 }}
+      style={{
+        border: "1px solid blue",
+        display: "flex",
+        zIndex: 1,
+      }}
     >
       <Grid
         container

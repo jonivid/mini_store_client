@@ -13,6 +13,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const [isloginScreen, setIsLoginScreen] = useState(true);
   const [user, setUser] = useState({});
+  const [credentials, setCredentials] = useState({});
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   return (
@@ -67,6 +68,7 @@ export const Login = () => {
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     console.log(credentialResponse);
+                    setCredentials(credentialResponse);
                     setUser(jwtDecode(credentialResponse.credential));
                     setIsUserLoggedIn(true);
                   }}
@@ -99,7 +101,9 @@ export const Login = () => {
                   <Button
                     onClick={() => {
                       googleLogout();
-                      setIsUserLoggedIn(false);
+                        setIsUserLoggedIn(false);
+                        setUser({})
+                        setCredentials({})
                     }}
                   >
                     Cancel
@@ -108,7 +112,7 @@ export const Login = () => {
                 <Grid item>
                   <Button
                     onClick={() => {
-                      dispatch(usersSlice.loginWithGoogle(user));
+                      dispatch(usersSlice.loginWithGoogle(credentials));
                     }}
                   >
                     Continue

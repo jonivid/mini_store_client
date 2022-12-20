@@ -7,12 +7,11 @@ export let usersSlice = createSlice({
   reducers: {},
 });
 
-export const loginWithGoogle = (userDetails) => async (dispatch, getState) => {
-  console.log(userDetails);
+export const loginWithGoogle = (credentials) => async (dispatch, getState) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/users/login_with_google`,
-      {userDetails},
+      { credentials },
     );
   } catch (error) {
     console.log("loginWithGoogle:", error);

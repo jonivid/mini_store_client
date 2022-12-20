@@ -9,9 +9,9 @@ export const ItemsLayout = () => {
     <Grid
       container
       justifyContent={"center"}
+      display={"flex"}
       style={{
         border: "1px solid blue",
-        display: "flex",
         zIndex: 1,
       }}
     >
@@ -19,7 +19,8 @@ export const ItemsLayout = () => {
         container
         item
         lg={8}
-        style={{ border: "1px solid green", display: "flex" }}
+        display={"flex"}
+        style={{ border: "1px solid green" }}
         align={"center"}
         flexDirection={"row"}
       >

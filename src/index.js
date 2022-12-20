@@ -15,6 +15,7 @@ import { Home } from "./components/home/Home";
 import HomeLayout from "./components/homeLayout/HomeLayout";
 import { ItemsLayout } from "./components/itemsLayout/ItemsLayout";
 import { ItemCardDetails } from "./components/itemCardDetails/ItemCardDetails";
+import { Login } from "./components/login/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -30,11 +31,14 @@ const router = createBrowserRouter([
       {
         path: "/items",
         element: <ItemsLayout />,
-        
       },
       {
         path: "/items/:id",
         element: <ItemCardDetails />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },

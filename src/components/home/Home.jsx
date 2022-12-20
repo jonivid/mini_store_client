@@ -13,14 +13,16 @@ export const Home = () => {
     >
       <Grid
         container
+        display={"flex"}
         justifyContent={"center"}
-        style={{ border: "1px solid blue", display: "flex", height: "40vh" }}
+        style={{ border: "1px solid blue", height: "40vh" }}
       >
         <Grid
           container
           item
           lg={8}
-          style={{ border: "1px solid green", display: "flex" }}
+          display={"flex"}
+          style={{ border: "1px solid green" }}
           justifyContent={"center"}
         >
           <Grid item></Grid>
@@ -29,21 +31,24 @@ export const Home = () => {
       <Grid
         container
         justifyContent={"center"}
-        style={{ border: "1px solid blue", display: "flex", height: "40vh" }}
+        display={"flex"}
+        style={{ border: "1px solid blue", height: "40vh" }}
       >
         <Grid item lg={8} style={{ border: "1px solid green" }}></Grid>
       </Grid>
       <Grid
         container
         justifyContent={"center"}
-        style={{ border: "1px solid blue", display: "flex", height: "40vh" }}
+        display={"flex"}
+        style={{ border: "1px solid blue", height: "40vh" }}
       >
         <Grid item lg={8} style={{ border: "1px solid green" }}></Grid>
       </Grid>
       <Grid
         container
         justifyContent={"center"}
-        style={{ border: "1px solid blue", display: "flex", height: "40vh" }}
+        display={"flex"}
+        style={{ border: "1px solid blue",  height: "40vh" }}
       >
         <Grid item lg={8} style={{ border: "1px solid green" }}></Grid>
       </Grid>

@@ -15,7 +15,7 @@ export const Navbar = () => {
         position: "sticky",
         top: 0,
         backgroundColor: "white",
-        zIndex:100
+        zIndex: 100,
       }}
     >
       <Grid xs={2} container item style={{ border: "1px solid red" }}></Grid>
@@ -25,14 +25,16 @@ export const Navbar = () => {
           container
           item
           justifyContent={"center"}
-          style={{ border: "1px solid red", height: "50%", display: "flex" }}
+          display={"flex"}
+          style={{ border: "1px solid red", height: "50%" }}
           flexDirection={"column"}
           alignItems={"center"}
         >
           <Grid
             container
             lg={4}
-            style={{ border: "1px solid red", display: "flex" }}
+            display={"flex"}
+            style={{ border: "1px solid red" }}
             justifyContent={"center"}
           >
             <Typography style={{ alignContent: "center" }}>
@@ -45,7 +47,8 @@ export const Navbar = () => {
           container
           item
           justifyContent={"center"}
-          style={{ border: "1px solid red", height: "50%", display: "flex" }}
+          display={"flex"}
+          style={{ border: "1px solid red", height: "50%" }}
         >
           <Grid item xs={1}>
             <Link to={"/"}>Home</Link>

@@ -62,7 +62,7 @@ export const ItemCard = ({ itemObj }) => {
         //Price grid
         item
         container
-        style={{ display: "flex" }}
+        display={"flex"}
         justifyContent={"center"}
       >
         <Grid
@@ -90,7 +90,7 @@ export const ItemCard = ({ itemObj }) => {
         //buttons grid
         item
         container
-        style={{ display: "flex" }}
+        display={"flex"}
         justifyContent={"center"}
       >
         <Grid item lg={4} sx={4}>

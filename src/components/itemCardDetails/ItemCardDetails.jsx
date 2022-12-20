@@ -13,10 +13,11 @@ export const ItemCardDetails = () => {
     dispatch(itemsSlice.getItemById(params.id));
   }, []);
   return (
-    <Grid container style={{ display: "flex" }} justifyContent={"center"}>
+    <Grid container display={"flex"} justifyContent={"center"}>
       <Grid
         item
-        style={{ border: "1px solid red", display: "flex" }}
+        display={"flex"}
+        style={{ border: "1px solid red" }}
         lg={4}
         sx={12}
         container
@@ -34,10 +35,10 @@ export const ItemCardDetails = () => {
       <Grid
         item
         container
+        display={"flex"}
         style={{
           border: "1px solid blue",
           height: "fit-content",
-          display: "flex",
         }}
         lg={4}
         sx={12}
@@ -47,9 +48,9 @@ export const ItemCardDetails = () => {
         <Grid
           item
           container
+          display={"flex"}
           style={{
             height: "fit-content",
-            display: "flex",
           }}
           lg={10}
           // sx={12}
@@ -95,7 +96,7 @@ export const ItemCardDetails = () => {
             item
             lg={12}
             justifyContent={"center"}
-            style={{ display: "flex" }}
+            display={"flex"}
           >
             <Grid item lg={3} sx={4}>
               <Button variant="contained">Buy</Button>

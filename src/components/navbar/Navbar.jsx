@@ -1,9 +1,12 @@
-import { Grid, Typography } from "@mui/material";
-import { positions } from "@mui/system";
+import { AccountCircle } from "@mui/icons-material";
+
+import { ReactComponent as StoreLogo } from "../../assets/result.svg";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <Grid
       container
@@ -21,7 +24,7 @@ export const Navbar = () => {
       <Grid xs={2} container item style={{ border: "1px solid red" }}></Grid>
       <Grid container xs={8} item style={{ border: "1px solid black" }}>
         <Grid
-          lg={12}
+          lg={2}
           container
           item
           justifyContent={"center"}
@@ -30,6 +33,18 @@ export const Navbar = () => {
           flexDirection={"column"}
           alignItems={"center"}
         >
+          <Grid container lg={8} display={"flex"} justifyContent={"center"}>
+            <StoreLogo
+              style={{
+                maxWidth: "100%",
+                maxHeight: "90%",
+              }}
+              onClick={() => navigate("/")}
+            />
+          </Grid>
+        </Grid>
+        <Grid lg={9}></Grid>
+        <Grid lg={1}>
           <Grid
             container
             lg={4}
@@ -37,9 +52,16 @@ export const Navbar = () => {
             style={{ border: "1px solid red" }}
             justifyContent={"center"}
           >
-            <Typography style={{ alignContent: "center" }}>
-              Store Icon
-            </Typography>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={() => navigate("/login")}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid
@@ -48,17 +70,24 @@ export const Navbar = () => {
           item
           justifyContent={"center"}
           display={"flex"}
-          style={{ border: "1px solid red", height: "50%" }}
+          style={{
+            border: "1px solid red",
+            height: "50%",
+          }}
         >
           <Grid item xs={1}>
-            <Link to={"/"}>Home</Link>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              Home
+            </Link>
           </Grid>
           <Grid item xs={1}>
-            <Link to={"/items"}>Items</Link>
+            <Link to={"/items"} style={{ textDecoration: "none" }}>
+              Items
+            </Link>
           </Grid>
-          <Grid item xs={1}>
+          {/* <Grid item xs={1}>
             <Link to={"/login"}>Login</Link>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
       <Grid xs={2} item style={{ border: "1px solid red" }}></Grid>

@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   GoogleLogin,
@@ -8,9 +8,13 @@ import {
 import jwtDecode from "jwt-decode";
 import * as usersSlice from "../../store/users/usersSlice";
 import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
+import { AccountCircle } from "@mui/icons-material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LockIcon from "@mui/icons-material/Lock";
 export const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isloginScreen, setIsLoginScreen] = useState(true);
   const [user, setUser] = useState({});
   const [credentials, setCredentials] = useState({});
@@ -51,6 +55,13 @@ export const Login = () => {
                   id="outlined-basic"
                   label="Outlined"
                   variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailOutlineIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item>
@@ -58,6 +69,13 @@ export const Login = () => {
                   id="outlined-basic"
                   label="Outlined"
                   variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item>
@@ -101,9 +119,9 @@ export const Login = () => {
                   <Button
                     onClick={() => {
                       googleLogout();
-                        setIsUserLoggedIn(false);
-                        setUser({})
-                        setCredentials({})
+                      setIsUserLoggedIn(false);
+                      setUser({});
+                      setCredentials({});
                     }}
                   >
                     Cancel
@@ -112,7 +130,9 @@ export const Login = () => {
                 <Grid item>
                   <Button
                     onClick={() => {
-                      dispatch(usersSlice.loginWithGoogle(credentials));
+                      dispatch(
+                        usersSlice.loginWithGoogle(credentials, navigate),
+                      );
                     }}
                   >
                     Continue

@@ -19,6 +19,11 @@ export const Login = () => {
   const [user, setUser] = useState({});
   const [credentials, setCredentials] = useState({});
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [loginValues, setLoginValues] = useState({ email: "", password: "" });
+
+  const handleLoginValues = (value, key) => {
+    setLoginValues({ ...loginValues, [`${key}`]: value });
+  };
 
   return (
     <GoogleOAuthProvider clientId="893616096-3lq21bti4bmgt6q6hon9j2920esvhivu.apps.googleusercontent.com">
@@ -26,11 +31,11 @@ export const Login = () => {
         <Grid
           item
           style={{
-            border: "1px solid red",
             height: "60vh",
             width: "45vh",
             marginTop: "50px",
             borderRadius: "8px",
+            background: "#e1f4f3",
           }}
           container
           flexDirection={"column"}
@@ -50,10 +55,10 @@ export const Login = () => {
               alignItems={"center"}
             >
               <Grid item>{isloginScreen === true ? "Login" : "SignUp"}</Grid>
-              <Grid item>
+              <Grid item sx={{ m: 3 }}>
                 <TextField
                   id="outlined-basic"
-                  label="Outlined"
+                  label="Email"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -62,12 +67,13 @@ export const Login = () => {
                       </InputAdornment>
                     ),
                   }}
+                  onChange={(e) => handleLoginValues(e.target.value, "email")}
                 />
               </Grid>
-              <Grid item>
+              <Grid item sx={{ m: 3 }}>
                 <TextField
                   id="outlined-basic"
-                  label="Outlined"
+                  label="Password"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -76,16 +82,29 @@ export const Login = () => {
                       </InputAdornment>
                     ),
                   }}
+                  onChange={(e) =>
+                    handleLoginValues(e.target.value, "password")
+                  }
                 />
               </Grid>
-              <Grid item>
+              <Grid sx={{ m: 3 }}>
+                <Button
+                  variant="contained"
+                  style={{ borderRadius: "8px" }}
+                  onClick={() =>
+                    dispatch(usersSlice.loginHandler(loginValues, navigate))
+                  }
+                >
+                  Login
+                </Button>
+              </Grid>
+              <Grid item sx={{ m: 3 }}>
                 <hr style={{ width: "20vw" }} />
               </Grid>
 
               <Grid item>
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
-                    console.log(credentialResponse);
                     setCredentials(credentialResponse);
                     setUser(jwtDecode(credentialResponse.credential));
                     setIsUserLoggedIn(true);

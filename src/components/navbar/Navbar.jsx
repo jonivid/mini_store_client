@@ -1,12 +1,37 @@
 import { AccountCircle } from "@mui/icons-material";
 
 import { ReactComponent as StoreLogo } from "../../assets/result.svg";
-import { Grid, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Grid,
+  IconButton,
+  Popover,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { deepOrange } from "@mui/material/colors";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export const Navbar = () => {
+  const [isConnected, setIsConnected] = useState(
+    sessionStorage.getItem("userName") === null ? false : true,
+  );
   const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("userName");
+    setIsConnected(false);
+  };
+
+  useEffect(() => {
+    sessionStorage.getItem("userName") === null
+      ? setIsConnected(false)
+      : setIsConnected(true);
+  }, [sessionStorage.getItem("userName")]);
+
   return (
     <Grid
       container
@@ -33,7 +58,13 @@ export const Navbar = () => {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <Grid container lg={8} display={"flex"} justifyContent={"center"}>
+          <Grid
+            container
+            item
+            lg={8}
+            display={"flex"}
+            justifyContent={"center"}
+          >
             <StoreLogo
               style={{
                 maxWidth: "100%",
@@ -43,26 +74,38 @@ export const Navbar = () => {
             />
           </Grid>
         </Grid>
-        <Grid lg={9}></Grid>
-        <Grid lg={1}>
-          <Grid
-            container
-            lg={4}
-            display={"flex"}
-            style={{ border: "1px solid red" }}
-            justifyContent={"center"}
-          >
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={() => navigate("/login")}
-              color="inherit"
+        <Grid lg={9} item></Grid>
+        <Grid lg={1} container item>
+          {console.log(isConnected)}
+          {isConnected === false ? (
+            <Grid
+              container
+              item
+              lg={4}
+              display={"flex"}
+              style={{ border: "1px solid red" }}
+              justifyContent={"center"}
             >
-              <AccountCircle />
-            </IconButton>
-          </Grid>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={() => navigate("/login")}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Grid>
+          ) : (
+            <Grid item style={{ border: "1px solid red" }}>
+              <Button onClick={() => handleLogOut()}>
+                <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                  {sessionStorage.getItem("userName")[0]}
+                </Avatar>
+              </Button>
+            </Grid>
+          )}
         </Grid>
         <Grid
           xs={12}

@@ -1,4 +1,14 @@
-import { Button, Grid, InputAdornment, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import {
   GoogleLogin,
@@ -9,7 +19,12 @@ import jwtDecode from "jwt-decode";
 import * as usersSlice from "../../store/users/usersSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AccountCircle } from "@mui/icons-material";
+import {
+  AccountCircle,
+  CheckBox,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
 export const Login = () => {
@@ -24,10 +39,21 @@ export const Login = () => {
   const handleLoginValues = (value, key) => {
     setLoginValues({ ...loginValues, [`${key}`]: value });
   };
+  const [showPassword, setShowPassword] = React.useState(false);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <GoogleOAuthProvider clientId="893616096-3lq21bti4bmgt6q6hon9j2920esvhivu.apps.googleusercontent.com">
-      <Grid container display={"flex"} justifyContent={"center"}>
+      <Grid
+        container
+        display={"flex"}
+        justifyContent={"center"}
+        style={{ background: "#f0fbff", height: "100vh" }}
+      >
         <Grid
           item
           style={{
@@ -35,7 +61,7 @@ export const Login = () => {
             width: "45vh",
             marginTop: "50px",
             borderRadius: "8px",
-            background: "#e1f4f3",
+            background: "white",
           }}
           container
           flexDirection={"column"}
@@ -54,8 +80,12 @@ export const Login = () => {
               flexDirection={"column"}
               alignItems={"center"}
             >
-              <Grid item>{isloginScreen === true ? "Login" : "SignUp"}</Grid>
-              <Grid item sx={{ m: 3 }}>
+              <Grid item>
+                <Typography>
+                  {isloginScreen === true ? "Login" : "SignUp"}
+                </Typography>
+              </Grid>
+              <Grid item sx={{ m: 3, width: "12vw" }}>
                 <TextField
                   id="outlined-basic"
                   label="Email"
@@ -70,15 +100,28 @@ export const Login = () => {
                   onChange={(e) => handleLoginValues(e.target.value, "email")}
                 />
               </Grid>
-              <Grid item sx={{ m: 3 }}>
+              <Grid item sx={{ m: 3, width: "12vw" }}>
                 <TextField
                   id="outlined-basic"
                   label="Password"
                   variant="outlined"
                   InputProps={{
+                    type: showPassword ? "text" : "password",
                     startAdornment: (
                       <InputAdornment position="start">
                         <LockIcon />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
                       </InputAdornment>
                     ),
                   }}
@@ -87,16 +130,35 @@ export const Login = () => {
                   }
                 />
               </Grid>
-              <Grid sx={{ m: 3 }}>
+              <Grid item sx={{ m: 3 }}>
                 <Button
                   variant="contained"
-                  style={{ borderRadius: "8px" }}
+                  style={{ borderRadius: "20px", width: "12vw" }}
                   onClick={() =>
                     dispatch(usersSlice.loginHandler(loginValues, navigate))
                   }
                 >
                   Login
                 </Button>
+              </Grid>
+              <Grid
+                container
+                item
+                flexDirection={"row"}
+                justifyContent={"center"}
+              >
+                {/* <Grid
+                  container
+                  item
+                  lg={5}
+                  flexDirection={"row"}
+                  alignItems={"center"}
+                > */}
+                <Typography>Forgot Password</Typography>
+                {/* </Grid> */}
+                {/* <Grid item lg={8}>
+                  <Typography>Not registered yet? create an Account</Typography>
+                </Grid> */}
               </Grid>
               <Grid item sx={{ m: 3 }}>
                 <hr style={{ width: "20vw" }} />

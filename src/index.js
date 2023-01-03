@@ -16,6 +16,7 @@ import HomeLayout from "./components/homeLayout/HomeLayout";
 import { ItemsLayout } from "./components/itemsLayout/ItemsLayout";
 import { ItemCardDetails } from "./components/itemCardDetails/ItemCardDetails";
 import { Login } from "./components/login/Login";
+import { CartPage } from "./components/cartPage/CartPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
       
     ],

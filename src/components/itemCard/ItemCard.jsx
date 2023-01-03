@@ -9,7 +9,6 @@ import "./style.css";
 export const ItemCard = ({ itemObj }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   return (
     <Grid
       //card grid
@@ -97,7 +96,21 @@ export const ItemCard = ({ itemObj }) => {
           <Button variant="contained">Buy</Button>
         </Grid>
         <Grid item lg={4} sx={4}>
-          <Button variant="outlined">Add to cart</Button>
+          <Button
+            variant="outlined"
+            onClick={() =>
+              dispatch(
+                itemsSlice.addToCart({
+                  name: itemObj.name,
+                  id: itemObj.id,
+                  quantity: 1,
+                  price: itemObj.price,
+                }),
+              )
+            }
+          >
+            Add to cart
+          </Button>
         </Grid>
       </Grid>
     </Grid>

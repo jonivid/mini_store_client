@@ -1,0 +1,10 @@
+a:-webkit-any-link {
+  color: black;
+  text-decoration: underline 0.15em rgba(0, 0, 0, 0);
+  transition: text-decoration-color 300ms;
+}
+a:-webkit-any-link:hover {
+  font-weight: 700;
+  font-size: larger;
+  text-decoration-color: black;
+}

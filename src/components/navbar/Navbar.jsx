@@ -1,5 +1,4 @@
 import { AccountCircle } from "@mui/icons-material";
-
 import { ReactComponent as StoreLogo } from "../../assets/result.svg";
 import {
   Avatar,
@@ -17,8 +16,13 @@ import { deepOrange } from "@mui/material/colors";
 import { useState } from "react";
 import { useEffect } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useSelector } from "react-redux";
+import "./style.css";
 
 export const Navbar = () => {
+  const cartItemsQuantity = useSelector(
+    (state) => state.itemsSlice.cartItemsQuantity,
+  );
   const [isConnected, setIsConnected] = useState(
     sessionStorage.getItem("userName") === null ? false : true,
   );
@@ -42,15 +46,16 @@ export const Navbar = () => {
       xs={12}
       style={{
         border: "1px solid black",
-        height: "100px",
+        // height: "100px",
         position: "sticky",
         top: 0,
-        backgroundColor: "white",
+        backgroundColor: "#88a9db",
         zIndex: 100,
+        color: "black",
       }}
     >
-      <Grid xs={2} container item style={{ border: "1px solid red" }}></Grid>
-      <Grid container xs={8} item style={{ marginTop:"10px" }}>
+      <Grid xs={2} container item></Grid>
+      <Grid container xs={8} item style={{ marginTop: "10px" }}>
         <Grid
           lg={2}
           container
@@ -77,7 +82,38 @@ export const Navbar = () => {
             />
           </Grid>
         </Grid>
-        <Grid lg={9} item></Grid>
+        {/* <Grid lg={} item></Grid> */}
+        <Grid
+          xs={9}
+          sx={{ p: 2 }}
+          container
+          item
+          justifyContent={"center"}
+          display={"flex"}
+          // style={{
+          //   height: "50%",
+          // }}
+        >
+          <Grid item xs={1}>
+            <Link
+              to={"/"}
+              // style={{ textDecoration: "none" }}
+            >
+              Home
+            </Link>
+          </Grid>
+          <Grid item xs={1}>
+            <Link
+              to={"/items"}
+              // style={{ textDecoration: "none" }}
+            >
+              Items
+            </Link>
+          </Grid>
+          {/* <Grid item xs={1}>
+            <Link to={"/login"}>Login</Link>
+          </Grid> */}
+        </Grid>
         <Grid
           lg={1}
           display={"flex"}
@@ -93,7 +129,6 @@ export const Navbar = () => {
               item
               lg={6}
               display={"flex"}
-              
               justifyContent={"center"}
             >
               <Tooltip title={`Connected as Guest, Tap to Login`}>
@@ -110,7 +145,7 @@ export const Navbar = () => {
               </Tooltip>
             </Grid>
           ) : (
-            <Grid item >
+            <Grid item>
               <Tooltip
                 title={`Connected as ${sessionStorage.getItem(
                   "userName",
@@ -125,13 +160,13 @@ export const Navbar = () => {
             </Grid>
           )}
           <Grid lg={6} item>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={cartItemsQuantity} color="primary">
               <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/cart")}
                 color="inherit"
               >
                 <ShoppingCartIcon />
@@ -139,34 +174,8 @@ export const Navbar = () => {
             </Badge>
           </Grid>
         </Grid>
-
-        <Grid
-          xs={12}
-          container
-          item
-          justifyContent={"center"}
-          display={"flex"}
-          style={{
-            border: "1px solid red",
-            height: "50%",
-          }}
-        >
-          <Grid item xs={1}>
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-              Home
-            </Link>
-          </Grid>
-          <Grid item xs={1}>
-            <Link to={"/items"} style={{ textDecoration: "none" }}>
-              Items
-            </Link>
-          </Grid>
-          {/* <Grid item xs={1}>
-            <Link to={"/login"}>Login</Link>
-          </Grid> */}
-        </Grid>
       </Grid>
-      <Grid xs={2} item style={{ border: "1px solid red" }}></Grid>
+      <Grid xs={2} item></Grid>
     </Grid>
   );
 };

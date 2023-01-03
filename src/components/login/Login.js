@@ -27,12 +27,12 @@ import {
 } from "@mui/icons-material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
-import { useStyles } from "./loginStyle";
+// import { useStyles } from "./loginStyle";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [isLoginScreen, setIsLoginScreen] = useState(true);
   const [user, setUser] = useState({});
@@ -172,7 +172,7 @@ export const Login = () => {
                         width: "12vw",
                         fill: "e7507d",
                       }}
-                      className={classes.loginBtn}
+                      // className={classes.loginBtn}
                       onClick={() =>
                         dispatch(usersSlice.loginHandler(loginValues, navigate))
                       }

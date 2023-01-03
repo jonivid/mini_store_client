@@ -1,181 +1,250 @@
-import { AccountCircle } from "@mui/icons-material";
-import { ReactComponent as StoreLogo } from "../../assets/result.svg";
-import {
-  Avatar,
-  Badge,
-  Button,
-  Grid,
-  IconButton,
-  Popover,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { deepOrange } from "@mui/material/colors";
-import { useState } from "react";
-import { useEffect } from "react";
+import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./style.css";
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   const cartItemsQuantity = useSelector(
     (state) => state.itemsSlice.cartItemsQuantity,
   );
-  const [isConnected, setIsConnected] = useState(
-    sessionStorage.getItem("userName") === null ? false : true,
-  );
-  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const handleLogOut = () => {
-    sessionStorage.removeItem("userName");
-    setIsConnected(false);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  useEffect(() => {
-    sessionStorage.getItem("userName") === null
-      ? setIsConnected(false)
-      : setIsConnected(true);
-  }, [sessionStorage.getItem("userName")]);
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
-    <Grid
-      container
-      item
-      xs={12}
-      style={{
-        border: "1px solid black",
-        // height: "100px",
-        position: "sticky",
-        top: 0,
-        backgroundColor: "#88a9db",
-        zIndex: 100,
-        color: "black",
-      }}
-    >
-      <Grid xs={2} container item></Grid>
-      <Grid container xs={8} item style={{ marginTop: "10px" }}>
-        <Grid
-          lg={2}
-          container
-          item
-          justifyContent={"center"}
-          display={"flex"}
-          style={{ height: "50%" }}
-          flexDirection={"column"}
-          alignItems={"center"}
-        >
-          <Grid
-            container
-            item
-            lg={8}
-            display={"flex"}
-            justifyContent={"center"}
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+            onClick={handleProfileMenuOpen}
           >
-            <StoreLogo
-              style={{
-                maxWidth: "90%",
-                maxHeight: "80%",
-              }}
-              onClick={() => navigate("/")}
+            <MenuIcon />
+          </IconButton>
+          {renderMenu}
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+            onClick={() => navigate("/")}
+          >
+            Home
+          </Typography>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginLeft: "20px", display: { xs: "none", sm: "block" } }}
+            onClick={() => navigate("/items")}
+          >
+            Items
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
             />
-          </Grid>
-        </Grid>
-        {/* <Grid lg={} item></Grid> */}
-        <Grid
-          xs={9}
-          sx={{ p: 2 }}
-          container
-          item
-          justifyContent={"center"}
-          display={"flex"}
-          // style={{
-          //   height: "50%",
-          // }}
-        >
-          <Grid item xs={1}>
-            <Link
-              to={"/"}
-              // style={{ textDecoration: "none" }}
+          </Search>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              onClick={() => navigate("/cart")}
             >
-              Home
-            </Link>
-          </Grid>
-          <Grid item xs={1}>
-            <Link
-              to={"/items"}
-              // style={{ textDecoration: "none" }}
-            >
-              Items
-            </Link>
-          </Grid>
-          {/* <Grid item xs={1}>
-            <Link to={"/login"}>Login</Link>
-          </Grid> */}
-        </Grid>
-        <Grid
-          lg={1}
-          display={"flex"}
-          container
-          item
-          flexDirection={"column"}
-          alignContent={"center"}
-          sx={{ height: "0px" }}
-        >
-          {isConnected === false ? (
-            <Grid
-              container
-              item
-              lg={6}
-              display={"flex"}
-              justifyContent={"center"}
-            >
-              <Tooltip title={`Connected as Guest, Tap to Login`}>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={() => navigate("/login")}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          ) : (
-            <Grid item>
-              <Tooltip
-                title={`Connected as ${sessionStorage.getItem(
-                  "userName",
-                )} ,Tap to Logout`}
-              >
-                <Button onClick={() => handleLogOut()}>
-                  <Avatar sx={{ bgcolor: deepOrange[500] }}>
-                    {sessionStorage.getItem("userName")[0]}
-                  </Avatar>
-                </Button>
-              </Tooltip>
-            </Grid>
-          )}
-          <Grid lg={6} item>
-            <Badge badgeContent={cartItemsQuantity} color="primary">
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={() => navigate("/cart")}
-                color="inherit"
-              >
+              <Badge badgeContent={cartItemsQuantity} color="error">
                 <ShoppingCartIcon />
-              </IconButton>
-            </Badge>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid xs={2} item></Grid>
-    </Grid>
+              </Badge>
+            </IconButton>
+
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </Box>
   );
 };

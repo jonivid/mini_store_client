@@ -38,7 +38,7 @@ function App() {
   }, []);
 
   return (
-    <Grid >
+    <Grid>
       <Navbar />
       <Outlet />
     </Grid>

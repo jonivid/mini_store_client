@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,6 +18,8 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,6 +66,20 @@ export const Navbar = () => {
   const cartItemsQuantity = useSelector(
     (state) => state.itemsSlice.cartItemsQuantity,
   );
+  const [isConnected, setIsConnected] = useState(
+    sessionStorage.getItem("userName") === null ? false : true,
+  );
+  const handleLogOut = () => {
+    sessionStorage.removeItem("userName");
+    setIsConnected(false);
+  };
+
+  useEffect(() => {
+    sessionStorage.getItem("userName") === null
+      ? setIsConnected(false)
+      : setIsConnected(true);
+  }, [sessionStorage.getItem("userName")]);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -90,6 +106,7 @@ export const Navbar = () => {
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
+      
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: "top",
@@ -103,8 +120,28 @@ export const Navbar = () => {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      {isConnected === false ? (
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            navigate("/login");
+          }}
+        >
+          Login
+        </MenuItem>
+      ) : (
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            handleLogOut();
+          }}
+        >
+          Logout
+        </MenuItem>
+      )}
+
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -175,7 +212,6 @@ export const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          {renderMenu}
 
           <Typography
             variant="h6"
@@ -226,7 +262,15 @@ export const Navbar = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {isConnected === true ? (
+                <Avatar
+                  sx={{ bgcolor: "white", color: "#1976d2", fontWeight: "700" }}
+                >
+                  {sessionStorage.getItem("userName")[0]}
+                </Avatar>
+              ) : (
+                <AccountCircle />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

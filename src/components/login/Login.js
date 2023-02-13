@@ -73,7 +73,6 @@ export const Login = () => {
       familyName: "",
     },
   });
-  const pass2 = watch("password");
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -341,8 +340,8 @@ export const Login = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid item sx={{ m: 5 }}>
-                  <Typography sx={{ color: "black", fontWeight: "700" }}>
-                    Sign Up
+                  <Typography sx={{ color: "#1976d2", fontWeight: "700" }}>
+                    Create an Account{" "}
                   </Typography>
                 </Grid>
                 <Grid item sx={{ m: 2 }}>
@@ -432,6 +431,9 @@ export const Login = () => {
                         label="Password"
                         {...field}
                         error={!!errors.password}
+                        inputProps={{
+                          id: "passwordInput",
+                        }}
                         // value={password}
                         // onChange={(e) => setPassword(e.target.value)}
                       />
@@ -473,7 +475,8 @@ export const Login = () => {
                     control={control}
                     rules={{
                       validate: {
-                        confirmedPass: (value) => value === pass2,
+                        confirmPass: (value) =>
+                          watch("password") !== value ? false : true,
                       },
                     }}
                     render={({ field }) => (
@@ -481,15 +484,19 @@ export const Login = () => {
                         id="outlined-basic"
                         label="Confirm Password"
                         {...field}
+                        inputProps={{
+                          id: "confirmPasswordInput",
+                        }}
                         error={!!errors.confirmPassword}
                       />
                     )}
                   />
-                  {console.log(errors.confirmedPass)}
-                  {/* {errors.confirmPassword &&
-                    errors.confirmedPass.type === "confirmedPass" && (
-                      <p style={{ color: "red" }}>passwords dont match</p>
-                    )} */}
+                  {errors.confirmPassword &&
+                    errors.confirmPassword.type === "confirmPass" && (
+                      <p style={{ color: "red" }}>
+                        Confirm password must match password
+                      </p>
+                    )}
                 </Grid>
                 <Grid item sx={{ m: 3 }}>
                   <Button
